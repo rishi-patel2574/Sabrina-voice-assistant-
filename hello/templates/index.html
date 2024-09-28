@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+
+
+{% block title %}Home{% endblock title %}
+
+
+{% block style %}
+textarea#result {
+    background-color: #45366d; /* Light grey background */
+    border: 1px solid #6c757d; /* Darker border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    resize: none;  /* Prevent user from resizing */
+    font-size: 1.25rem; /* Increased font size */
+    color: #17a2b8;
+    font-family: var(--fontStack-monospace, ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace) !important;
+}
+
+body {
+    overflow: hidden;
+    background: #3b0e68;
+    background: radial-gradient(circle, #3b0e68 0%, #1a084e 100%);
+}
+
+.mic {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+}
+
+div {
+    size: 20px;
+}
+
+div.container-mic{}
+
+.mic::before, .mic::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    z-index: 2;
+    box-shadow: 0 0 10px 10px #1c084f; /* Reduced shadow size */
+}
+
+.mic::before {
+    width: 150px; /* Reduced size */
+    height: 150px; /* Reduced size */
+    background-color: #1a084e;
+    animation-play-state: paused; /* Start with paused animation */
+}
+
+.mic.active::before {
+    animation: circle-size 0.8s linear infinite alternate;
+}
+
+.mic::after {
+    width: 100px; /* Reduced size */
+    height: 100px; /* Reduced size */
+    background-color: #2f1e5f;
+}
+
+.mic-icon {
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(3); /* Reduced scale */
+    display: block;
+    width: 14px;
+    height: 12px;
+    cursor: pointer;
+    border-bottom-left-radius: 120px;
+    border-bottom-right-radius: 120px;
+    border: 2px solid;
+    border-top: 0;
+    margin-top: 10px;
+    z-index: 3;
+}
+
+.mic-icon::before, .mic-icon::after {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+}
+
+.mic-icon::before {
+    width: 2px;
+    height: 5px;
+    top: calc(100% + 1px);
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: #fff;
+}
+
+.mic-icon::after {
+    border: 2px solid;
+    width: 8px;
+    height: 18px;
+    left: 50%;
+    top: -10px;
+    border-radius: 4px;
+    transform: translate(-50%, 0);
+}
+
+.mic-shadow {
+    width: 100px; /* Reduced size */
+    height: 100px; /* Reduced size */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 100%;
+    z-index:-60;
+    box-shadow: 5px -15px 15px 5px #823ca6, 12px -5px 30px 5px #aab3d2, -10px -10px 40px 5px #5acee3, 26px 3px 10px 5px #1b7d8f, 1px 1px 40px 5px #f30bf5; /* Reduced shadows */
+    animation: shadow-rotate 1.5s linear infinite;
+    transform-origin: center;
+    animation-play-state: paused; /* Start with paused animation */
+}
+
+.mic.active .mic-shadow {
+    animation-play-state: running;
+}
+
+@keyframes circle-size {
+    from {
+        width: 100px; /* Smaller size */
+        height: 100px; /* Smaller size */
+    }
+    to {
+        width: 120px; /* Slightly larger size */
+        height: 120px; /* Slightly larger size */
+    }
+}
+
+@keyframes shadow-rotate {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+.form-label
+{
+    color: #fff;
+}
+
+.form-control::placeholder{
+    color: #fff;
+}
+{% endblock style %}
+
+{% block hactive %}active{% endblock hactive %}
+
+{% block body %}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4" style="color: #17a2b8;">Your Voice Assistant <i>SABRINA, {{request.user}}</i></h2>
+
+    <!-- Styled Textarea -->
+    <div class="form-group" >
+        <label for="result" class="form-label">Your Transcribed Text:</label>
+        <textarea id="result" name="result" class="form-control" rows="5" placeholder="Speak and see the result here..." readonly></textarea>
+    </div>
+
+    <!-- Microphone Button -->
+    <button id="start" type="button">
+        <div class="container-mic">   
+            <div class="mic">
+                <i id="icon" class="mic-icon"></i>
+                <div class="mic-shadow"></div>
+            </div>
+        </div>
+    </button>
+
+<!-- Speech Recognition Script -->
+<script type="text/javascript">
+    var startButton = document.getElementById('start');
+    var iconElement = document.getElementById('icon');
+    var micContainer = document.querySelector('.mic');
+    var resultElement = document.getElementById('result');
+    var recognition = new webkitSpeechRecognition();
+
+    recognition.lang = window.navigator.language;
+    recognition.interimResults = true;
+
+    let isMicOn = false;
+
+    startButton.addEventListener('click', () => {
+        isMicOn = !isMicOn;
+
+        if (isMicOn) {
+            // Turn on the mic and start animation
+            startButton.classList.add('btn-danger');  // Change button color to danger
+            iconElement.classList.remove('fa-microphone');  // Remove mic icon
+            iconElement.classList.add('fa-fire');  // Add fire icon
+
+            // Add the active class to start the animation
+            micContainer.classList.add('active');
+
+            // Start speech recognition
+            recognition.start();
+        } else {
+            // Turn off the mic and stop animation
+            recognition.stop(); // This will trigger the 'end' event
+        }
+    });
+
+    recognition.addEventListener('result', (event) => {
+        const result = event.results[event.results.length - 1][0].transcript;
+        resultElement.value = result;
+    });
+
+    recognition.addEventListener('end', () => {
+        isMicOn = false;
+
+        // Stop animation and revert icon and button color
+        startButton.classList.remove('btn-danger');  // Revert button color
+       iconElement.classList.remove('fa-fire');  // Remove fire icon
+       iconElement.classList.add('fa-microphone');  // Add mic icon
+        
+        // Remove the active class to stop the animation
+        micContainer.classList.remove('active');
+
+        sendDataToServer(resultElement.value);
+    });
+
+    function sendDataToServer(text) {
+        fetch("{% url 'submit_text' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: JSON.stringify({ result: text })
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log("Server response:", data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
+
+</script>
+{% endblock body %}

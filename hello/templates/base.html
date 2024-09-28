@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <title> {% block title %} {% endblock title %} | Sabrina </title>
+    <style> 
+
+      /* Navbar Theme Styling */
+      .navbar {
+          background-color: #3b1469; /* Matching the About Us page body theme */
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adding shadow for focus */
+      }
+      .navbar-brand, .nav-link {
+          color: #dcdcdc !important; /* Light text color for navbar items */
+          font-size: 18px; /* Slightly larger font for visibility */
+      }
+      .navbar-brand:hover, .nav-link:hover {
+          color: #42d1f5 !important; /* Hover effect matching the blue/teal color */
+      }
+      .navbar-toggler {
+          border-color: #42d1f5; /* Matching the button with the hover color */
+      }
+      .navbar-toggler-icon {
+          background-color: #42d1f5; /* Icon color matching the body theme */
+      }
+      .nav-link.active {
+          color: #42d1f5 !important; /* Active link color */
+      }
+
+      /* Hover effects */
+      .nav-item {
+          transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+      .nav-item:hover {
+          background-color: #42d1f5; /* Background on hover */
+          transform: scale(1.05); /* Slight zoom effect */
+          border-radius: 5px; /* Rounding the corners */
+      }
+
+      /* Navbar Search Button Styling */
+      form .nav-link {
+          color: #dcdcdc !important;
+          font-size: 16px;
+      }
+      form .nav-link:hover {
+          color: #42d1f5 !important;
+      }
+      
+      {% block style %}{% endblock style %}
+    </style>
+</head>
+<body>
+
+    <div>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="index">Sabrina</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link {% block hactive %}{% endblock hactive %}" aria-current="page" href="index">Home</a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link {% block aactive %}{% endblock aactive %}" href="about">About Us</a>
+                  </li>
+                  
+                  <li class="nav-item">
+                    <a class="nav-link {% block uactive %}{% endblock uactive %}" href="userprofile">User Profile</a>
+                  </li>
+                  
+                  <li class="nav-item">
+                    <a class="nav-link {% block hiactive %}{% endblock hiactive %}" href="history">History</a>
+                  </li>
+                </ul>
+                <form class="d-flex" role="search">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                      <a class="nav-link {% block lactive %}{% endblock lactive %}" href="login">Login</a>
+                    </li>
+                  </ul>
+                </form>
+              </div>
+            </div>
+        </nav>
+    </div>
+
+    {% block body %}
+    {% endblock body %}
+</body>
+</html>

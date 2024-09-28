@@ -1,0 +1,26 @@
+textarea#result {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    resize: none;  /* Prevent user from resizing */
+    font-size: 1rem;
+}
+
+button#start {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Adjust the height as needed */
+    margin-top: -50px; /* Move the button upwards by 50px */
+}

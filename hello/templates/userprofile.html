@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock title %}
+
+{% block style %}
+
+/* Custom CSS for the profile page */
+  .profile-card {
+      background-color: #3b1469;
+      border: 1px solid #42d1f5;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(66, 209, 245, 0.3);
+      padding: 20px;
+      color: white;
+  }
+
+  .profile-picture {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 2px solid #42d1f5;
+  }
+
+  .btn-custom {
+      background-color: #42d1f5;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+  }
+
+  .btn-custom:hover {
+      background-color: #34a6c8;
+  }
+  input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+
+{% endblock style %}
+
+{% block uactive %}active{% endblock uactive %}
+
+{% block body %}
+
+<main class="container py-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-card text-center">
+                <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture" class="profile-picture mb-3" onerror="this.onerror=null;this.src='default_image_path_here';">
+                <h3>{{ user.username }}</h3>
+                <p>{{ user.email }}</p>
+                <p>Member since: {{ user.date_joined }}</p>
+                <button class="btn-custom" data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</button>
+                <button class="btn-custom mt-2" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Change Password</button>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="profile-card">
+                <h4>Personal Information</h4>
+                <p><strong>Full Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+                <p><strong>Bio:</strong> {{ user.profile.bio }}</p>
+                <p><strong>Date of Birth:</strong> {{ user.profile.date_of_birth }}</p>
+                <p><strong>Gender:</strong> {{ user.profile.get_gender_display }}</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProfileLabel">Edit Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="modal-body">
+            <h4>User Information</h4>
+            <div class="mb-3">
+              {{ user_form.first_name.label_tag }}
+              {{ user_form.first_name }}
+            </div>
+            <div class="mb-3">
+              {{ user_form.last_name.label_tag }}
+              {{ user_form.last_name }}
+            </div>
+            <div class="mb-3">
+              {{ user_form.email.label_tag }}
+              {{ user_form.email }}
+            </div>
+  
+            <h4>Profile Information</h4>
+            <div class="mb-3">
+              {{ user_form.profile_picture.label_tag }}
+              {{ user_form.profile_picture }}
+            </div>
+            <div class="mb-3">
+              {{ user_form.bio.label_tag }}
+              {{ user_form.bio }}
+            </div>
+            <div class="mb-3">
+              {{ user_form.date_of_birth.label_tag }}
+              {{ user_form.date_of_birth }}
+            </div>
+            <div class="mb-3">
+              {{ user_form.gender.label_tag }}
+              {{ user_form.gender }}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn-custom">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+
+{% endblock body %}

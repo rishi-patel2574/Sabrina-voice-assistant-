@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block style %}
+  /* Custom styles for the Signup page */
+  body {
+      background-color: #2c135d; /* Dark purple background for the body */
+      color: white; /* Light text for contrast */
+  }
+
+  .logo img {
+      max-width: 50px; /* Adjust logo size */
+      height: auto;
+  }
+
+  .card {
+      background-color: #3b1469; /* Matching the body background color */
+      border: 1px solid #42d1f5; /* Adding a border to the card for contrast */
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(66, 209, 245, 0.3); /* Light blue glow effect */
+  }
+
+  .card-title {
+      color: #42d1f5; /* Light blue color for the card title */
+  }
+
+  .form-label, .small, p {
+      color: white; /* White text for labels and small text like "First Name", "Email", etc. */
+  }
+
+  .form-control {
+      background-color: #52277e; /* Dark purple background for input fields */
+      color: white; /* White text inside the input fields */
+      border: 1px solid #42d1f5; /* Light blue border for input fields */
+  }
+
+  .form-control:focus {
+      background-color: #634899; /* Slightly lighter purple when focused */
+      border-color: #42d1f5; /* Blue border when focused */
+      box-shadow: 0 0 10px rgba(66, 209, 245, 0.3); /* Light glow effect */
+  }
+
+  a {
+      color: #87CEFA; /* Light blue for links */
+  }
+
+  a:hover {
+      color: #5BA6D4; /* Darker blue for links on hover */
+  }
+
+  #errors {
+      color: red;
+  }
+
+  /* Button Styling to match login page */
+  .btn-custom {
+      background: linear-gradient(45deg, #42d1f5, #34a6c8); /* Gradient similar to login page */
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 50px; /* Rounded corners */
+      box-shadow: 0 5px 15px rgba(66, 209, 245, 0.4); /* Shadow for depth */
+      transition: background 0.3s ease, box-shadow 0.3s ease; /* Smooth transition on hover */
+  }
+
+  .btn-custom:hover {
+      background: linear-gradient(45deg, #34a6c8, #42d1f5); /* Reverse gradient on hover */
+      box-shadow: 0 5px 20px rgba(66, 209, 245, 0.6); /* More shadow on hover */
+  }
+
+{% endblock style %}
+
+{% block body %}
+<main>
+    <div class="container">
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+              <div class="d-flex justify-content-center py-4">
+                <a href="index.html" class="logo d-flex align-items-center w-auto">
+                  <span class="d-none d-lg-block" style="color: #42d1f5; font-size: 24px;">Registration</span> <!-- Updated to match the theme -->
+                </a>
+              </div>
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="pt-4 pb-2">
+                    <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+                    <p class="text-center small">Enter your personal details to create an account</p>
+                  </div>
+                  <form class="row g-3 needs-validation" method="POST" enctype="multipart/form-data"> <!-- Added enctype for file upload -->
+                    {% csrf_token %}
+                    <div class="col-12">
+                      {% for message in messages %}
+                      <label class="form-label" id="errors">{{message}}</label>
+                      {% endfor %}
+                    </div>
+                    <div class="col-12">
+                      <label for="yourName" class="form-label">First Name</label>
+                      <input type="text" name="first_name" class="form-control" id="yourName" required>
+                      <div class="invalid-feedback">Please, enter your First name!</div>
+                    </div>
+                    <div class="col-12">
+                      <label for="yourName" class="form-label">Last Name</label>
+                      <input type="text" name="last_name" class="form-control" id="yourName" required>
+                      <div class="invalid-feedback">Please, enter your Last name!</div>
+                    </div>
+                    <div class="col-12">
+                      <label for="yourEmail" class="form-label">Your Email</label>
+                      <input type="email" name="email" class="form-control" id="yourEmail" required>
+                      <div class="invalid-feedback">Please enter a valid Email address!</div>
+                    </div>
+                    <div class="col-12">
+                      <label for="yourUsername" class="form-label">Username</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                        <input type="text" name="username" class="form-control" id="yourUsername" required>
+                        <div class="invalid-feedback">Please choose a username.</div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <label for="yourPassword" class="form-label">Password</label>
+                      <input type="password" name="password" class="form-control" id="yourPassword" required>
+                      <div class="invalid-feedback">Please enter your password!</div>
+                    </div>
+                    <!-- New fields for user profile -->
+                    <div class="col-12">
+                      <label for="yourDob" class="form-label">Date of Birth</label>
+                      <input type="date" name="dob" class="form-control" id="yourDob" required>
+                    </div>
+                    <div class="col-12">
+                      <label for="yourBio" class="form-label">Bio</label>
+                      <textarea name="bio" class="form-control" id="yourBio" rows="3"></textarea>
+                    </div>
+                    <div class="col-12">
+                      <label for="yourGender" class="form-label">Gender</label>
+                      <select name="gender" class="form-control" id="yourGender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                    </div>
+                    <div class="col-12">
+                      <label for="profilePhoto" class="form-label">Profile Photo</label>
+                      <input type="file" name="profile_photo" class="form-control" id="profilePhoto">
+                    </div>
+                    <div class="col-12">
+                      <button class="btn btn-custom w-100" type="submit">Create Account</button> <!-- Updated button style -->
+                    </div>
+                    <div class="col-12">
+                      <p class="small mb-0">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+</main>
+{% endblock body %}

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}About Us{% endblock title %}
+
+{% block style %}
+
+/* Global Styles */
+body {
+    background-color: #2c135d; /* Matches the purple gradient from your home page */
+    color: white; /* Makes the text stand out */
+    font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3 {
+    color: #42d1f5; /* Matches the blue/teal color in the title */
+}
+
+p, li {
+    color: #dcdcdc; /* Slightly muted white for text */
+}
+
+/* About Us Page Specific Styles */
+.container {
+    padding: 30px;
+}
+
+section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #3b1469;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+{% endblock style %}
+
+{% block aactive %}active{% endblock aactive %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center">About Our Voice Assistant Project</h1>
+
+    <section class="mt-4">
+        <h2>Project Overview</h2>
+        <p>"Sabrina" is a voice assistant project designed for my 5th-semester project at NV Pass College. Named after the famous singer Sabrina Carpenter, this project is aimed at helping users interact with their system and external services using voice commands. It simplifies daily tasks such as opening applications, searching the web, and retrieving information from platforms like Wikipedia and YouTube, making user interactions more intuitive and hands-free.</p>
+    </section>
+
+    <section class="mt-4">
+        <h2>Key Functionalities</h2>
+        <ul>
+            <li>Voice-activated commands for web searches, opening YouTube, Google, StackOverflow, and playing music.</li>
+            <li>Time queries (e.g., asking for the current time).</li>
+            <li>Opening applications such as VS Code and other system-based commands.</li>
+            <li>User authentication system (login/signup).</li>
+            <li>Real-time interaction with voice commands and responses.</li>
+        </ul>
+    </section>
+
+    <section class="mt-4">
+        <h2>Project Aim and Vision</h2>
+        <p>The aim of this project is to create an accessible, user-friendly voice assistant that enables users to perform everyday tasks more efficiently. The vision is to integrate advanced functionalities, such as artificial intelligence and natural language processing, to build a smarter and more intuitive assistant capable of understanding complex requests and providing more personalized responses.</p>
+    </section>
+
+    <section class="mt-4">
+        <h2>Mission</h2>
+        <p>Our mission is to offer a seamless user experience by developing a voice assistant that leverages modern web technologies and automation tools to minimize manual inputs, enhancing productivity and usability.</p>
+    </section>
+
+    <section class="mt-4">
+        <h2>Limitations</h2>
+        <p>While "Sabrina" offers a wide range of functionalities, there are a few limitations:</p>
+        <ul>
+            <li>Limited understanding of complex or ambiguous voice commands.</li>
+            <li>Currently restricted to predefined web services and applications.</li>
+            <li>Dependency on a stable internet connection for external services (e.g., Wikipedia, YouTube).</li>
+            <li>Basic error handling for unrecognized commands.</li>
+        </ul>
+    </section>
+
+    <section class="mt-4">
+        <h2>Problems Solved by This Project</h2>
+        <p>This project addresses several common issues:</p>
+        <ul>
+            <li>Reduces reliance on manual inputs by allowing voice-activated commands.</li>
+            <li>Enables hands-free access to web searches, applications, and multimedia.</li>
+            <li>Simplifies everyday tasks like searching for information or opening frequently used apps.</li>
+            <li>Provides a responsive and efficient user interface for basic voice interactions.</li>
+        </ul>
+    </section>
+</div>
+{% endblock body %}
